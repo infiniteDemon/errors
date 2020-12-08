@@ -17,60 +17,6 @@ func TestErrorChainCompat(t *testing.T) {
 	}
 }
 
-func TestIs(t *testing.T) {
-	err := New("test")
-
-	type args struct {
-		err    error
-		target error
-	}
-	tests := []struct {
-		name string
-		args args
-		want bool
-	}{
-		{
-			name: "with stack",
-			args: args{
-				err:    WithStack(err),
-				target: err,
-			},
-			want: true,
-		},
-		{
-			name: "with message",
-			args: args{
-				err:    WithMessage(err, "test"),
-				target: err,
-			},
-			want: true,
-		},
-		{
-			name: "with message format",
-			args: args{
-				err:    WithMessagef(err, "%s", "test"),
-				target: err,
-			},
-			want: true,
-		},
-		{
-			name: "std errors compatibility",
-			args: args{
-				err:    fmt.Errorf("wrap it: %w", err),
-				target: err,
-			},
-			want: true,
-		},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			if got := Is(tt.args.err, tt.args.target); got != tt.want {
-				t.Errorf("Is() = %v, want %v", got, tt.want)
-			}
-		})
-	}
-}
-
 type customErr struct {
 	msg string
 }
