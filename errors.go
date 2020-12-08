@@ -93,6 +93,7 @@
 package errors
 
 import (
+	stderrors "errors"
 	"fmt"
 	"io"
 )
@@ -295,4 +296,3 @@ func Cause(err error) error {
 // An error is considered to match a target if it is equal to that target or if
 // it implements a method Is(error) bool such that Is(target) returns true.
 func Is(err, target error) bool { return stderrors.Is(err, target) }
-
