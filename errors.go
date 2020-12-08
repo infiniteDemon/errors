@@ -286,3 +286,13 @@ func Cause(err error) error {
 	}
 	return err
 }
+
+// Is reports whether any error in err's chain matches target.
+//
+// The chain consists of err itself followed by the sequence of errors obtained by
+// repeatedly calling Unwrap.
+//
+// An error is considered to match a target if it is equal to that target or if
+// it implements a method Is(error) bool such that Is(target) returns true.
+func Is(err, target error) bool { return stderrors.Is(err, target) }
+
